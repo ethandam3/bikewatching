@@ -1,0 +1,90 @@
+html,
+body {
+  margin: 0;
+  padding: 5;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+}
+
+#map {
+  width: 100%; /* Adjust width to your desired size */
+  height: 100%; /* Adjust height to your desired size */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: subtle shadow for effect */
+  border-radius: 8px; /* Optional: rounded corners */
+}
+
+/* Step 3.2: SVG layer on top of the map */
+#map svg {
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+
+  circle {
+    fill: var(--color);
+    fill-opacity: 60%;
+    stroke: white;
+    pointer-events: auto; /* Step 4.4: let tooltips show */
+  }
+}
+
+/* Step 6: color by traffic flow, shared by circles and legend */
+#map circle,
+.legend > div {
+  --color-departures: steelblue;
+  --color-arrivals: darkorange;
+  --color: color-mix(
+    in oklch,
+    var(--color-departures) calc(100% * var(--departure-ratio)),
+    var(--color-arrivals)
+  );
+}
+
+/* Step 5.1: title on the left, slider on the right */
+header {
+  align-self: stretch;
+  display: flex;
+  gap: 1em;
+  align-items: baseline;
+
+  label {
+    margin-left: auto;
+  }
+
+  time,
+  em {
+    display: block;
+  }
+
+  em {
+    color: gray;
+  }
+}
+
+/* Step 6.2: legend (Design 1: blocks) */
+.legend {
+  align-self: stretch;
+  display: flex;
+  gap: 1px;
+  margin-block: 1em;
+
+  > div {
+    flex: 1;
+    padding: 0.25em 2em;
+    background: var(--color);
+    color: white;
+    text-align: center;
+
+    &:first-child {
+      text-align: left;
+    }
+
+    &:last-child {
+      text-align: right;
+    }
+  }
+}
